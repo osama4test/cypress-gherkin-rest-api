@@ -40,3 +40,9 @@ Feature: Users API
     When I submit a request to login a user with email "eve.holt@reqres.in" and password "cityslicka"
     Then I should receive a 200 status code for user login
     And the response should contain the user token
+
+  Scenario: Login unsuccessful
+    Given the API is available
+    When I submit a request to login a user with email "eve.holt@reqres.in" and no password
+    Then I should receive a 400 status code for user login
+    And the response should contain an error message

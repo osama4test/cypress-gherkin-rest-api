@@ -42,6 +42,10 @@ When('I submit a request to login a user with email {string} and password {strin
   apiPage.loginUser(email, password);
 });
 
+When('I submit a request to login a user with email {string} and no password', (email) => {
+  apiPage.loginUser(email, null);
+});
+
 Then('I should receive a {int} status code for users', (expectedStatusCode) => {
   apiPage.verifyStatusCode('@getUsers', expectedStatusCode);
 });
@@ -110,5 +114,11 @@ Then('the response should contain the user ID and token', () => {
 Then('the response should contain the user token', () => {
   cy.get('@loginUser').its('body').should((body) => {
     expect(body).to.have.property('token');
+  });
+});
+
+Then('the response should contain an error message', () => {
+  cy.get('@loginUser').its('body').should((body) => {
+    expect(body).to.have.property('error');
   });
 });

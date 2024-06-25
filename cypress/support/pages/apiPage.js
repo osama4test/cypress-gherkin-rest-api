@@ -37,9 +37,17 @@ class ApiPage {
   }
 
   loginUser(email, password) {
-    return cy.request('POST', '/login', {
-      email: email,
-      password: password
+    const requestBody = {
+      email: email
+    };
+    if (password) {
+      requestBody.password = password;
+    }
+    return cy.request({
+      method: 'POST',
+      url: '/login',
+      body: requestBody,
+      failOnStatusCode: false // This prevents Cypress from failing the test on non-2xx status codes
     }).as('loginUser');
   }
 
